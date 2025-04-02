@@ -42,7 +42,7 @@ class terminalFormatter
     }
 
     // =============================================================================================
-    public function format()
+    public function apply()
     {
         if (empty($this->formats)) return $this->text;
 
@@ -71,7 +71,7 @@ class terminalFormatter
     // =============================================================================================
     public function __toString()
     {
-        return $this->format();
+        return $this->apply();
     }
 
     // =============================================================================================

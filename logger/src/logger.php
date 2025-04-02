@@ -1,6 +1,7 @@
 <?php
 
-class logger
+require_once __DIR__ . '/../../commandline/src/terminalformatter.php';
+class Logger
 {
     const INFO = 1;
     const WARNING = 2;
@@ -17,11 +18,11 @@ class logger
     ];
 
     private $levelColors = [
-        self::INFO => "INFO",
-        self::WARNING => "WARNING",
-        self::ERROR => "ERROR",
-        self::CRITICAL => "CRITICAL",
-        self::DEBUG => "DEBUG"
+        self::INFO => [terminalFormatter::FG_GREEN],
+        self::WARNING => [terminalFormatter::FG_YELLOW],
+        self::ERROR => [terminalFormatter::FG_RED],
+        self::CRITICAL => [terminalFormatter::FG_WHITE, terminalFormatter::BG_RED],
+        self::DEBUG => [terminalFormatter::FG_BLUE]
     ];
 
     // Logger configs
@@ -41,12 +42,6 @@ class logger
         $this->logFilePath = $options["logFilePath"] ?? "";
         $this->logToFile = $options["logToFile"] ?? isset($logFilePath);
         $this->useTerminalFormatter = $options["useTerminalFormatter"] ?? true;
-
-        if ($this->useTerminalFormatter)
-        {
-            require_once __DIR__ . '/../../commandline/src/terminalformatter.php';
-            $this->terminalFormatter = new terminalFormatter();
-        }
         
     }
 
@@ -62,11 +57,22 @@ class logger
         if ($level < $this->logLevel) return;
 
         $timestamp = date("Y-m-d H:i:s");
-        $levelName = "Minor";
-        
+        $levelName = $this->levelNames[$level];
+
         $message = $this->format($timestamp, $message, $context, $levelName);
 
-        if ($this->logToTerminal) $this->logToTerminal($message);
+        if ($this->logToTerminal) 
+        {
+            if ($this->useTerminalFormatter) {
+                $terminalMessage = $this->formatForTerminal($message, $level);
+                $this->logToTerminal($terminalMessage);
+            }
+            else {
+                $this->logToTerminal($message);
+            }
+            
+        }
+        if ($this->logToFile) $this->logToFile($message);
     }
 
     // =============================================================================================
@@ -92,6 +98,28 @@ class logger
     }
 
     // =============================================================================================
+    private function formatForTerminal(string $message, int $level)
+    {
+        if (isset($this->levelColors[$level]))
+        {
+            $parts = explode("] ", $message, 2);
+            $timestampPart = $parts[0] . "] ";
+            $messagePart = $parts[1];
+
+            $this->terminalFormatter = new terminalFormatter($messagePart);
+            foreach ($this->levelColors[$level] as $format)
+            {
+                $this->terminalFormatter->add($format);
+            }
+            
+            return $timestampPart . $this->terminalFormatter->apply() . PHP_EOL;
+        }
+
+        return $message . PHP_EOL;
+        
+    }
+
+    // =============================================================================================
     private function logToTerminal(string $message)
     {
         echo $message;
@@ -104,9 +132,10 @@ class logger
     }
 }
 
-$loggr = new logger([
+$logger = new Logger([
             "logLevel" => 1,
-            "logToTerminal" => true
+            "logToTerminal" => true,
+            "useTerminalFormatter" => true
         ]);
 
-$loggr->log(1, "Test log message: {reason}", ["reason" => "LogReason"]);
+$logger->log(1, "Test log message: {reason}", ["reason" => "LogReason"]);
