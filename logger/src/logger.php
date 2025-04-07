@@ -115,14 +115,14 @@ class Logger
             return $timestampPart . $this->terminalFormatter->apply() . PHP_EOL;
         }
 
-        return $message . PHP_EOL;
+        return $message;
         
     }
 
     // =============================================================================================
     private function logToTerminal(string $message)
     {
-        echo $message;
+        echo $message . PHP_EOL;
     }
 
     // =============================================================================================
@@ -131,11 +131,3 @@ class Logger
         file_put_contents($this->logFilePath, $message, FILE_APPEND);
     }
 }
-
-$logger = new Logger([
-            "logLevel" => 1,
-            "logToTerminal" => true,
-            "useTerminalFormatter" => true
-        ]);
-
-$logger->log(1, "Test log message: {reason}", ["reason" => "LogReason"]);
