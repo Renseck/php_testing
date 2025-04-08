@@ -19,26 +19,30 @@ spl_autoload_register(function($class) {
 
 require_once "factory/formFactory.php";
 
-$factory = new formFactory();
+$formFactory = new formFactory();
 
-$textareaInput = $factory->create([
-    'type' => 'textarea',
-    'name' => 'message',
-    'id' => 'message',
-    'class' => 'contactform'
+$form = $formFactory->createForm([
+    'id' => 'contact-form',
+    'class' => 'form-horizontal'
 ]);
 
-$countrySelect = $factory->create([
-    'type' => 'select',
-    'name' => 'country',
-    'id' => 'country',
-    'options' => [
-        'us' => 'United States',
-        'ca' => 'Canada',
-        'uk' => 'United Kingdom'
-    ],
-    'value' => 'us'
+
+$form->addElement([
+    'type' => 'email',
+    'name' => 'email',
+    'id' => 'email',
+    'class' => 'form-control',
+    'placeholder' => 'Enter email',
+    'label' => 'Email Address' // Custom label text
 ]);
 
-echo $textareaInput->render();
-echo $countrySelect->render();
+// Add a text input without an explicit label (will generate "First Name")
+$form->addElement([
+    'type' => 'text',
+    'name' => 'firstName',
+    'id' => 'first-name',
+    'class' => 'form-control'
+]);
+
+// Render the complete form
+echo $form->render();
