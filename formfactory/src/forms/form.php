@@ -8,15 +8,15 @@ class Form
     private $elements = [];
 
     // =============================================================================================
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
         $this->fieldFactory = new fieldFactory();
         
         // Set default form attributes
-        $this->attributes = [
+        $this->attributes = array_merge([
             'method' => 'post',
-            'action' => '',
-        ];
+            'action' => ''
+        ], $attributes);
     }
 
     // =============================================================================================

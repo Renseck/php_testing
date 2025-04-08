@@ -15,11 +15,18 @@ spl_autoload_register(function($class) {
         require_once $file;
         return;
     }
+
+    // Also try in the factory directory
+    $file = __DIR__ . '/forms/' . $class . '.php';
+    if (file_exists($file)) {
+        require_once $file;
+        return;
+    }
 });
 
 require_once "factory/formFactory.php";
 
 $formFactory = new formFactory();
 
-$form = $formFactory->create(formFactory::TYPE_LOGIN);
-echo $form->render();
+$loginForm = $formFactory->create(formFactory::TYPE_LOGIN);
+echo $loginForm->render();
