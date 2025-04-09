@@ -13,25 +13,25 @@ class formFactory
         {
             case 'login':
                 $fields = [
-                    "email" => "email",
-                    "password" => "password"
+                    "email" => ["type" => "email", "label" => "Email:"],
+                    "password" => ["type" => "password", "label" => "Password:"]
                 ];
                 break;
             
             case 'registration':
                 $fields = [
-                    "name" => "text",
-                    "email" => "email",
-                    "password" => "password",
-                    "password_repeat" => "password"
+                    "name" => ["type" => "text", "label" => "Name:"],
+                    "email" => ["type" => "email", "label" => "Email:"],
+                    "password" => ["type" => "password", "label" => "Password:"],
+                    "password_repeat" => ["type" => "password", "label" => "Repeat password:"]
                 ];
                 break;
 
             case 'contact':
                 $fields = [
-                    "name" => "text",
-                    "email" => "email",
-                    "message" => "textarea"
+                    "name" => ["type" => "text", "label" => "Name:"],
+                    "email" => ["type" => "email", "label" => "Email:"],
+                    "message" => ["type" => "textarea", "label" => "Message:"]
                 ];
                 break;
 
@@ -43,14 +43,3 @@ class formFactory
         $form->showForm($page, $action, $method, $fields, $submit_caption, $attributes);
     }
 }
-
-$formFactory = new FormFactory();
-
-// Generate a login form with additional attributes for the form tag.
-$formFactory->createForm(
-    page: 'login',
-    action: 'index.php',
-    method: 'POST',
-    submit_caption: 'Login',
-    attributes: ['class' => 'login-form']
-);

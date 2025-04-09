@@ -25,18 +25,18 @@ class Form
     }
 
     // =============================================================================================
-    public function showField(string $field_name, string $field_type) : void
+    public function showField(string $field_name, array $field_info) : void
     {
         $fieldHtml = '<div class="form-group">' . PHP_EOL
-                    .'  <label for="' . $field_name . '">' . $field_name . '</label>' . PHP_EOL;
+                    .'  <label for="' . $field_name . '">' . $field_info['label'] . '</label>' . PHP_EOL;
 
-        switch ($field_type)
+        switch ($field_info['type'])
         {
             case "textarea":
                 $fieldHtml .= '     <textarea name="' . $field_name . '"></textarea>' . PHP_EOL;
                 break;
             default: 
-                $fieldHtml .= '     <input type="' . $field_type . '" name="' . $field_name . '" />' . PHP_EOL;
+                $fieldHtml .= '     <input type="' . $field_info['type'] . '" name="' . $field_name .'" />' . PHP_EOL;
                 break;
         }
         $fieldHtml .= '</div>' . PHP_EOL;
@@ -47,9 +47,12 @@ class Form
     // =============================================================================================
     public function showFields(array $fields) : void
     {
-        foreach ($fields as $name => $type)
+        foreach ($fields as $name => $info)
         {
-            $this->showField($name, $type);
+            $this->showField(
+                field_name : $name,
+                field_info: $info
+            );
         }
     }
 
