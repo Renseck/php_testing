@@ -1,11 +1,9 @@
 <?php
+namespace App\controllers;
 
-require_once "basecontroller.php";
-require_once "pagecontroller.php";
-require_once "ajaxcontroller.php";
+use App\interfaces\iController;
 
-// This really functions only as a router, not a true controller as evidenced by the empty methods
-class multiController extends baseController
+class multiController implements iController
 {
     protected $_isAjax;
     // =============================================================================================
@@ -16,7 +14,7 @@ class multiController extends baseController
     }
     // =============================================================================================
 
-    public function handleRequest()
+    public function handleRequest() : bool
     {
         if ($this->_isAjax)
         {
@@ -26,11 +24,13 @@ class multiController extends baseController
         {
             $controller = new pageController();
         }
-        $controller->handleRequest();
+        return $controller->handleRequest();
     }
 
     // =============================================================================================
-    protected function getData() { /* Not used in this implementation */ }
-    protected function processRequest() { /* Not used in this implementation */ }
-    protected function sendResponse() { /* Not used in this implementation */ }
+    
+    protected function _getVar($name, $default = "NOTFOUND") : string
+    {
+        return $_GET[$name] ?? $default;
+    }
 }

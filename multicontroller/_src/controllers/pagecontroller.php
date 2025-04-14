@@ -1,22 +1,12 @@
 <?php
 
-require_once "basecontroller.php";
+namespace App\controllers;
 
 class pageController extends baseController
 {
-    protected string $response;
     protected string $page;
 
     // =============================================================================================
-    public function handleRequest()
-    {
-        $this->getData();
-        $this->processRequest();
-        $this->sendResponse();
-    }
-
-    // =============================================================================================
-
     protected function getData()
     {
         // This is just a silly placeholder for now but in reality this would probably check which page is requested
@@ -24,9 +14,13 @@ class pageController extends baseController
     }
 
     // =============================================================================================
-    protected function processRequest()
+    protected function processRequest() : bool
     {
-        $this->response = <<<EOD
+        // Initialize with a getData call, setting the $this->page parameter
+        $this->getData();
+        
+        // Ordinarily this wouldn't work quite so bluntly
+        $response = <<<EOD
         <!DOCTYPE html>
         <html>
         <head>
@@ -43,18 +37,25 @@ class pageController extends baseController
         <div class="fullscreen" id="top">Placeholder TOP</div>
         <div class="fullscreen" id="mid">Placeholder MID<button id="populate">Populate divs</button></div>
         <div class="fullscreen" id="bot">Placeholder BOT</div>
+        <div class="fullscreen" id="last"><button id="reset">Reset</button> &larr; This button resets the original placeholders</div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="_src/js/ajax.js"></script> 
         </body>
         </html>
         EOD;
+        
+        echo $response;
+        return true;
     }
     
     // =============================================================================================
-    protected function sendResponse()
+    protected function reportError(\Throwable $ex) : void
     {
-        echo $this->response;
+        echo "<div class='error'>";
+        echo "<h2>An error occurred</h2>";
+        echo "<p>" . htmlspecialchars($ex->getMessage()) . "</p>";
+        echo "<p>Error code: " . $ex->getCode() . "</p>";
+        echo "</div>";
     }
-    
     // =============================================================================================
 }
