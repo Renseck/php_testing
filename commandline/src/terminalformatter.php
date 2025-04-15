@@ -76,10 +76,3 @@ class terminalFormatter
 
     // =============================================================================================
 }
-
-/*
-$formatter = new terminalFormatter();
-echo $formatter->setText("Hello world!")->add(terminalFormatter::FG_CYAN,
-                                              terminalFormatter::UNDERLINE,
-                                              terminalFormatter::BG_WHITE);
-*/
