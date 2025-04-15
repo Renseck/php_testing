@@ -1,7 +1,7 @@
 <?php
 
 // Include the autoloader
-require_once "_src/autoloader.php";
+require_once "src/autoloader.php";
 
 // Use namespaced class
 use App\controllers\multiController;
