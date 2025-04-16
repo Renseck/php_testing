@@ -26,7 +26,7 @@ class tester
 
         $this->page->addCss("assets/css/stylesheet.css");
         $this->page->addJs("assets/js/ajax.js");
-        $headerContent = [new DefaultHeader(true)];
+        $headerContent = [new DefaultHeader(true), "lalala not an ELement"];
         $this->page->addHeaderElements($headerContent);
 
         $this->page->showHeader();

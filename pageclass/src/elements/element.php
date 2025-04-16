@@ -2,10 +2,12 @@
 
 namespace App\views\elements;
 
+use App\interfaces\iElement;
+
 /**
  * Elements are taken to mean things like login forms, navigation menus etc
  */
-abstract class Element
+abstract class Element implements iElement
 {
     private bool $directOutput;
     public string $wrapperClass = "";

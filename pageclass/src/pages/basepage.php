@@ -2,6 +2,8 @@
 
 namespace App\views\pages;
 
+Use App\interfaces\iElement;
+
 class BasePage
 {
     protected string $title = "<notitle>";
@@ -97,7 +99,7 @@ class BasePage
     {
         foreach ($elements as $element)
         {
-            $element->show(true);
+            if ($element instanceof iElement) $element->show(true);
         }
     }
 
