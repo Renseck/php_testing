@@ -21,22 +21,22 @@ class Autoloader
             // Get the relative class name
             $relative_class = substr($class, $len);
             
-            // Custom mapping for view namespace
-            if (strpos($relative_class, 'view\\pages\\') === 0) {
-                $relative_class = str_replace('view\\pages\\', 'page\\', $relative_class);
-            } elseif (strpos($relative_class, 'view\\elements\\') === 0) {
-                $relative_class = str_replace('view\\elements\\', 'elements\\', $relative_class);
+            // Custom mapping for view namespace - fix the mapping to use "pages" (plural) instead of "page"
+            if (strpos($relative_class, 'views\\pages\\') === 0) {
+                $relative_class = str_replace('views\\pages\\', 'pages\\', $relative_class);
+            } elseif (strpos($relative_class, 'views\\elements\\') === 0) {
+                $relative_class = str_replace('views\\elements\\', 'elements\\', $relative_class);
             }
             
             // Convert namespace separators to directory separators
             $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
             
-            // Make sure the file name is case sensitive
-            $file = str_ireplace('basepage.php', 'basepage.php', $file);
-            
             // If the file exists, require it
             if (file_exists($file)) {
                 require $file;
+            } else {
+                // Debug - uncomment if needed
+                // echo "Failed to load: $file for class $class<br/>";
             }
         });
     }

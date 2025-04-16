@@ -3,9 +3,9 @@
 // Include the autoloader
 require_once "src/autoloader.php";
 
-// Make sure these use statements match the actual namespaces in the files
-use App\view\pages\basePage;
-use App\view\elements\DefaultHeader;
+// Correct namespace imports based on the actual class definitions
+use App\views\pages\BasePage;
+use App\views\elements\DefaultHeader;
 
 class tester
 {
@@ -14,7 +14,7 @@ class tester
     // =============================================================================================
     public function __construct()
     {
-        $this->page = new basePage();
+        $this->page = new BasePage();
     }
 
     // =============================================================================================
@@ -25,7 +25,7 @@ class tester
 
         $this->page->addCss("assets/css/stylesheet.css");
         $this->page->addJs("assets/js/ajax.js");
-        $headerContent = (new DefaultHeader(true));
+        $headerContent = [new DefaultHeader(true)];
         $this->page->addHeaderElements($headerContent);
 
         $this->page->showHeader();

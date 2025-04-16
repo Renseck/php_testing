@@ -1,8 +1,8 @@
 <?php
 
-namespace App\view\elements;
+namespace App\views\elements;
 
-use App\view\elements\Element;
+use App\views\elements\Element;
 
 class DefaultHeader extends Element
 {

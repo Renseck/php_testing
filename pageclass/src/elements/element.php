@@ -1,6 +1,6 @@
 <?php
 
-namespace App\view\elements;
+namespace App\views\elements;
 
 /**
  * Elements are taken to mean things like login forms, navigation menus etc

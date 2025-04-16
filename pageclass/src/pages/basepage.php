@@ -1,8 +1,6 @@
 <?php
 
-namespace App\view\pages;
-
-use App\view\elements\Element;
+namespace App\views\pages;
 
 class BasePage
 {
@@ -104,16 +102,35 @@ class BasePage
     }
 
     // =============================================================================================
-    public function addHeaderElements(Element $element) : void
+    /**
+     * Add header elements to a page
+     * @param array $elements Array of Element objects
+     * 
+     * @return void
+     */
+    public function addHeaderElements(array $elements) : void
     {
-        $this->headerElements[] = $element;
+        foreach ($elements as $element)
+        {
+            $this->headerElements[] = $element;
+        }
+        
     }
 
     // =============================================================================================
-    public function addBodyElements(Element $element) : void
+    /**
+     * Add body elements to a page
+     * @param array $elements Array of Element objects
+     * 
+     * @return void
+     */
+    public function addBodyElements(array $elements) : void
     {
-
-        $this->bodyElements[] = $element;
+        foreach ($elements as $element)
+        {
+            $this->bodyElements[] = $element;
+        }
+        
     }
 
     // =============================================================================================
