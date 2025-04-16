@@ -2,7 +2,7 @@
 
 namespace App\interfaces;
 
-interface iElement
+interface iPageElement
 {
     public function show(bool $addWrapper) : string|bool;
 }

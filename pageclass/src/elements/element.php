@@ -2,12 +2,12 @@
 
 namespace App\views\elements;
 
-use App\interfaces\iElement;
+use App\interfaces\iPageElement;
 
 /**
  * Elements are taken to mean things like login forms, navigation menus etc
  */
-abstract class Element implements iElement
+abstract class Element implements iPageElement
 {
     private bool $directOutput;
     public string $wrapperClass = "";

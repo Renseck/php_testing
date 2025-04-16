@@ -2,7 +2,7 @@
 
 namespace App\views\pages;
 
-Use App\interfaces\iElement;
+Use App\interfaces\iPageElement;
 
 class BasePage
 {
@@ -54,24 +54,26 @@ class BasePage
     // =============================================================================================
     public function beginBody()
     {
-        echo '<body>' . PHP_EOL;
+        echo '<body>' . PHP_EOL
+            .'<div id="main-content">' . PHP_EOL;
     }
 
     // =============================================================================================
     public function showBody()
     {
-        echo '<div id="main-content">' . PHP_EOL;
+        // echo '<div id="main-content">' . PHP_EOL;
 
         // Loop through array of body elements supplied by Elements class
         $this->showElements($this->bodyElements);
 
-        echo '</div>' . PHP_EOL;
+        // echo '</div>' . PHP_EOL;
     }
 
     // =============================================================================================
     public function showFooter()
     {
-        echo '<br>' . PHP_EOL
+        echo '</div>' . PHP_EOL
+            .'<br>' . PHP_EOL
             .'<footer class="footer">&copy;&nbsp;' . date("Y") . '&nbsp;Rens van Eck</footer>' . PHP_EOL;
     }
 
@@ -99,7 +101,7 @@ class BasePage
     {
         foreach ($elements as $element)
         {
-            if ($element instanceof iElement) $element->show(true);
+            if ($element instanceof iPageElement) $element->show(true);
         }
     }
 
