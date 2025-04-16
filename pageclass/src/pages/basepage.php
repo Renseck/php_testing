@@ -24,10 +24,10 @@ class BasePage
 	}
 
 	// ==============================================================================================
-	public function showHeader(bool $addWrapper = false)
+	public function showHeader()
 	{
 		// Loop through array of header elements supplied by Elements class
-        $this->showElements($this->headerElements, $addWrapper);
+        $this->showElements($this->headerElements);
 
         // Then add in things like CSS and JS links
         foreach ($this->cssFiles as $cssFile)
@@ -56,12 +56,12 @@ class BasePage
     }
 
     // =============================================================================================
-    public function showBody(bool $addWrapper = true)
+    public function showBody()
     {
         echo '<div id="main-content">' . PHP_EOL;
 
         // Loop through array of body elements supplied by Elements class
-        $this->showElements($this->bodyElements, $addWrapper);
+        $this->showElements($this->bodyElements);
 
         echo '</div>' . PHP_EOL;
     }
@@ -93,11 +93,11 @@ class BasePage
      * 
      * @return void
      */
-    protected function showElements(array $elements, bool $addWrapper) : void
+    protected function showElements(array $elements) : void
     {
         foreach ($elements as $element)
         {
-            $element->show($addWrapper);
+            $element->show(true);
         }
     }
 

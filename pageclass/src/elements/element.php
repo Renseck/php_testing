@@ -8,7 +8,7 @@ namespace App\views\elements;
 abstract class Element
 {
     private bool $directOutput;
-    private string $wrapperClass = "defaultClass";
+    public string $wrapperClass = "";
 
     // =============================================================================================
     public function __construct(bool $directOutput = false)
@@ -27,9 +27,13 @@ abstract class Element
 
         if ($addWrapper)
         {
-            $content = '<div class="' . $this->wrapperClass . '">' . PHP_EOL
-                      .$content
-                      .'</div>' . PHP_EOL;
+            if (!empty($this->wrapperClass))
+            {
+                $content = '<div class="' . $this->wrapperClass . '">' . PHP_EOL
+                .$content
+                .'</div>' . PHP_EOL;
+            }
+            
         }
 
         if ($this->directOutput) {
@@ -45,12 +49,11 @@ abstract class Element
      * Set the wrapper class
      * @param string $className Div class name
      * 
-     * @return Element
+     * @return void
      */
-    final public function setWrapperClass(string $className) : Element
+    final public function setWrapperClass(string $className) : void
     {
         $this->wrapperClass = $className;
-        return $this;
     }
 
     // =============================================================================================
